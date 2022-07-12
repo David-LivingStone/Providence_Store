@@ -66,6 +66,7 @@ namespace ProvidenceStore.Controllers
                 }
 
                 orderModel.id = Guid.NewGuid();
+                orderModel.Date = orderModel.Date = DateTime.Now.ToShortDateString().ToString();
                 var response = await storeDbContext.Order.AddAsync(orderModel);
 
                 var reduce = prod.Quantity - orderModel.Quantity;

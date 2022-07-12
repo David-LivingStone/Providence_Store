@@ -42,6 +42,7 @@ namespace ProvidenceStore.Controllers
         public async Task<IActionResult> AddProduct(ProductModel productModel)
         {
             productModel.id = Guid.NewGuid();
+            productModel.Date = DateTime.Now.ToShortDateString().ToString();
             await storeDbContext.Product.AddAsync(productModel);
             await storeDbContext.SaveChangesAsync();
 

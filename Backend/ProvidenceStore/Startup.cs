@@ -31,6 +31,17 @@ namespace ProvidenceStore
             services.AddControllers();
             services.AddDbContext<StoreDbContext>(options => options.UseSqlServer(Configuration["DbConnection"]));
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsApiPolicy",
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:3000")
+                        .WithHeaders(new[] { "authorization", "content-type", "accept" })
+                        .WithMethods(new[] { "GET", "POST", "PUT", "DELETE", "OPTIONS" })
+                        ;
+                });
+            });
 
             services.AddSwaggerGen();
             services.AddSwaggerGen(c =>
@@ -59,9 +70,12 @@ namespace ProvidenceStore
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("CorsApiPolicy");
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+           
 
             app.UseAuthorization();
 
